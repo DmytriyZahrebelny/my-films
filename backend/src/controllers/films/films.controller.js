@@ -5,6 +5,7 @@ class FilmsController {
 	constructor() {
 		this.path = '/films';
 		this.router = express.Router();
+		this.data = data;
 
 		this.initializeRoutes();
 	}
@@ -14,7 +15,7 @@ class FilmsController {
 	}
 
 	async getAllFilms(req, res) {
-		const products = data;
+		const products = this.data;
 
 		res.send(products);
 	}
