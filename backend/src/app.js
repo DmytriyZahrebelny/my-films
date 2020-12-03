@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require("body-parser");
+const cors = require('cors');
 
 class App {
 	constructor(controllers) {
@@ -11,6 +12,7 @@ class App {
 	}
 
 	initializeMiddlewares() {
+		this.app.use(cors())
 		this.app.use(bodyParser.json());
 	}
 

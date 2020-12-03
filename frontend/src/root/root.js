@@ -1,22 +1,30 @@
-import React from 'react';
-// import { Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-// import { UserInfo } from '../components/user-info';
-// import { UsersList } from '../components/users-list';
-// import { useRoot } from './use-root';
-// import { useRootStyles } from './use-root-styles';
+import { getFilmsAsync } from '../store/films';
+import { FilmsList } from '../views/films-list';
+import { FilmInfo } from '../views/film-info';
+import { Header } from '../components/header';
+import { ROUTES } from '../app.constants';
+import { useRootStyles } from './use-root-styles';
 
 export const Root = () => {
-  // useRoot();
-  // const classes = useRootStyles();
+  const dispatch = useDispatch();
+  const classes = useRootStyles();
+
+  useEffect(() => {
+    dispatch(getFilmsAsync());
+  }, [dispatch, getFilmsAsync]);
 
   return (
-    <div>
-      test
-      {/* <Switch>
-        <Route path="/:id" component={UserInfo} />
-        <Route path="/" component={UsersList} />
-      </Switch> */}
+    <div className={classes.root}>
+      <Header />
+      <Switch>
+        <Route path={ROUTES.search} component={FilmsList} />
+        <Route path={`${ROUTES.info}/:id`} component={FilmInfo} />
+        <Route path={ROUTES.default} component={FilmsList} />
+      </Switch>
     </div>
   );
 };
