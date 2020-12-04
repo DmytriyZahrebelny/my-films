@@ -45,12 +45,15 @@ export const deleteFilmAsync = (id) => async (dispatch) => {
   dispatch(addFilms(response));
 };
 
+export const uploadDataAsync = (file) => async (dispatch) => {
+  const response = await Api.uploadData(file);
+
+  dispatch(addFilms(response));
+};
+
 export const selectFilms = (state) => {
   return state.films.allFilms;
 };
 export const selectSearchFilms = (state) => state.films.searchFilms;
-export const selectStars = (state) => {
-  return [...new Set(state.films.allFilms.reduce((acc, film) => [...acc, ...film.stars], []))];
-};
 
 export default filmsSlice.reducer;

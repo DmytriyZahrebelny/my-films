@@ -1,13 +1,24 @@
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { selectStars, addNewFilmsAsync } from '../../../store/films';
-
-import { REQUIRED, SHOULD_BE_ONLY_NUMBERS } from './new-film-modal.constants';
+import { addNewFilmsAsync, selectFilms } from '../../../store/films';
+import {
+  REQUIRED,
+  SHOULD_BE_ONLY_NUMBERS,
+  MAX_YEAR,
+  MIN_YEAR,
+  MIN_YEAR_WARNING,
+  MAX_YEAR_WARNING,
+  ALREADY_EXISTS,
+} from './new-film-modal.constants';
 
 export const useNewFilmModal = (onClose) => {
   const dispatch = useDispatch();
-  const starsList = useSelector(selectStars);
+  const films = useSelector(selectFilms);
+  const [uniqueError, setUniqueError] = useState('');
+  const [isStarsModal, setStarsModal] = useState(false);
+  const [stars, setStars] = useState([]);
   const validate = (value) => {
     const errors = {};
 
@@ -17,13 +28,37 @@ export const useNewFilmModal = (onClose) => {
 
     if (!value.releaseYear) {
       errors.releaseYear = REQUIRED;
+    } else if (!Number(value.releaseYear)) {
+      errors.releaseYear = SHOULD_BE_ONLY_NUMBERS;
+    } else if (Number(value.releaseYear) < MIN_YEAR) {
+      errors.releaseYear = MIN_YEAR_WARNING;
+    } else if (Number(value.releaseYear) > MAX_YEAR) {
+      errors.releaseYear = MAX_YEAR_WARNING;
     }
 
-    if (!Number(value.releaseYear)) {
-      errors.releaseYear = SHOULD_BE_ONLY_NUMBERS;
+    if (value.stars.length) {
+      errors.stars = REQUIRED;
     }
 
     return errors;
+  };
+
+  const diff = (a1, a2) => {
+    return !a1.filter((i) => !a2.includes(i)).concat(a2.filter((i) => !a1.includes(i))).length;
+  };
+
+  const addStarsModal = () => {
+    setStarsModal(true);
+  };
+
+  const closeStarsModal = () => {
+    setStarsModal(false);
+  };
+
+  const addStars = (star) => {
+    if (!stars.includes(star)) {
+      setStars([...stars, star]);
+    }
   };
 
   const { handleSubmit, getFieldProps, errors, touched, setFieldValue } = useFormik({
@@ -31,12 +66,24 @@ export const useNewFilmModal = (onClose) => {
       title: '',
       releaseYear: '',
       format: '',
-      stars: [],
+      stars,
     },
     validate,
     onSubmit: (values) => {
-      onClose();
-      dispatch(addNewFilmsAsync(values));
+      const newData = { ...values, stars };
+      const equalFilms = films.filter(
+        ({ releaseYear, format, stars: starsList }) =>
+          releaseYear === newData.releaseYear &&
+          format === newData.format &&
+          diff(starsList, newData.stars)
+      );
+
+      if (!equalFilms.length) {
+        onClose();
+        dispatch(addNewFilmsAsync(newData));
+      } else {
+        setUniqueError(ALREADY_EXISTS);
+      }
     },
   });
 
@@ -46,6 +93,11 @@ export const useNewFilmModal = (onClose) => {
     errors,
     touched,
     setFieldValue,
-    starsList,
+    addStarsModal,
+    closeStarsModal,
+    isStarsModal,
+    addStars,
+    starsValue: stars.length ? stars.join(', ') : '',
+    uniqueError,
   };
 };

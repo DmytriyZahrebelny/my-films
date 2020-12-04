@@ -1,29 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useNewFilmModalStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  content: {
-    position: 'relative',
-    width: 600,
-    minHeight: 400,
-    padding: '60px 80px',
-    backgroundColor: theme.color.white,
-    outline: 'none',
-    boxSizing: 'border-box',
-
-    '& input': {
-      width: '100%',
-    },
-  },
-  close: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
-    cursor: 'pointer',
+export const useNewFilmModalStyles = makeStyles({
+  form: {
+    width: '100%',
   },
   button: {
     display: 'block',
@@ -34,4 +13,15 @@ export const useNewFilmModalStyles = makeStyles((theme) => ({
     outline: 'none',
     borderRadius: 10,
   },
-}));
+  addStars: {
+    marginTop: 15,
+    width: 100,
+    textAlign: 'center',
+    border: '1px solid #000',
+    cursor: 'pointer',
+  },
+  uniqueError: {
+    color: 'red',
+    textAlign: 'center',
+  },
+});

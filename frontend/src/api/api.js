@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const path = 'http://localhost:3080/films';
 
 export const Api = {
@@ -37,5 +39,14 @@ export const Api = {
 
     const data = response.json();
     return data;
+  },
+  async uploadData(file) {
+    const response = await axios.post(`${path}/upload`, file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return response.data;
   },
 };

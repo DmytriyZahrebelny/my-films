@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require('cors');
+const upload = require('express-fileupload');
 
 class App {
 	constructor(controllers) {
@@ -12,7 +13,8 @@ class App {
 	}
 
 	initializeMiddlewares() {
-		this.app.use(cors())
+		this.app.use(cors());
+		this.app.use(upload());
 		this.app.use(bodyParser.json());
 	}
 

@@ -5,3 +5,4 @@
 4. cd frontend/
 5. npm i
 6. npm start
+7. upload file data.txt from project

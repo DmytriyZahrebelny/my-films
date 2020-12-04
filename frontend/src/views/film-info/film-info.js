@@ -5,9 +5,10 @@ import { useFilmInfo } from './use-film-info';
 import { useFilmsInfoStyles } from './use-film-info-styles';
 import { Icon } from '../../components/icon';
 import { FILM_FORMAT_MAP } from './film-info.constants';
+import { WarningModal } from '../../components/warning-modal';
 
 export const FilmInfo = () => {
-  const { filmInfo, deleteFilm } = useFilmInfo();
+  const { filmInfo, deleteFilm, openWarningModal, closeWarningModal, isWarning } = useFilmInfo();
   const classes = useFilmsInfoStyles();
 
   if (!filmInfo) {
@@ -39,11 +40,14 @@ export const FilmInfo = () => {
           color="textPrimary"
           className={classes.delete}
           classes={{ root: classes.text }}
-          onClick={deleteFilm}
+          onClick={openWarningModal}
         >
           <Icon name="close" size={20} /> Delete
         </Typography>
       </div>
+      {isWarning && (
+        <WarningModal open={isWarning} onClose={closeWarningModal} deleteFilm={deleteFilm} />
+      )}
     </Grid>
   );
 };

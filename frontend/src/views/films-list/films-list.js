@@ -1,21 +1,34 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 
 import { useFilms } from './use-films';
 import { FilmsCard } from './films-card';
 import { useFilmStylesStyles } from './use-film-list-styles';
-import { LIST_DATA_MAP } from './films-list.constants';
+import { LIST_DATA_MAP, NOTHING_FOUND, SEARCH_DATA } from './films-list.constants';
+import { UploadDataModal } from '../../components/upload-data-modal';
 
 export const FilmsList = () => {
   const { pathname } = useLocation();
-  const films = useFilms();
+  const filmsData = useFilms();
   const classes = useFilmStylesStyles();
+
+  if (!filmsData.films.length) {
+    return <UploadDataModal open />;
+  }
+
+  if (!filmsData.searchFilms.length && pathname === SEARCH_DATA) {
+    return (
+      <Typography className={classes.warningMessage} variant="h5">
+        {NOTHING_FOUND}
+      </Typography>
+    );
+  }
 
   return (
     <Grid container classes={{ root: classes.root }}>
-      {films[LIST_DATA_MAP[pathname]] &&
-        films[LIST_DATA_MAP[pathname]].map((data) => <FilmsCard key={data.id} {...data} />)}
+      {filmsData[LIST_DATA_MAP[pathname]] &&
+        filmsData[LIST_DATA_MAP[pathname]].map((data) => <FilmsCard key={data.id} {...data} />)}
     </Grid>
   );
 };
