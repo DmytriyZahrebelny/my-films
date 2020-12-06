@@ -1,12 +1,13 @@
-export const DVD = 'DVD';
-export const VHS = 'VHS';
-export const BLU_RAY = 'Blu-ray';
+import { ChoiceLoadModal } from './choice-load-modal/choice-load-modal';
+import { FormModal } from './form-modal/form-modal';
+import { UploadDataModal } from '../upload-data-modal';
 
-export const MAX_YEAR = new Date().getFullYear();
-export const MIN_YEAR = 1850;
+export const UPLOAD_MODAL = 'UPLOAD_MODAL';
+export const FORM_MODAL = 'FORM_MODAL';
+export const CHOICE_MODAL = 'CHOICE_MODAL';
 
-export const REQUIRED = 'required';
-export const SHOULD_BE_ONLY_NUMBERS = 'should be only numbers';
-export const MIN_YEAR_WARNING = 'min year 1850';
-export const MAX_YEAR_WARNING = `max year ${MAX_YEAR}`;
-export const ALREADY_EXISTS = 'Already exists';
+export const MODAL_MAP = {
+  [CHOICE_MODAL]: ChoiceLoadModal,
+  [FORM_MODAL]: FormModal,
+  [UPLOAD_MODAL]: UploadDataModal,
+};

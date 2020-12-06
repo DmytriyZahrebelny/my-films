@@ -4,6 +4,9 @@ import { Api } from '../../api';
 export const filmsSlice = createSlice({
   name: 'films',
   initialState: {
+    pages: 1,
+    isLastPage: false,
+    currentFilms: [],
     allFilms: [],
     searchFilms: [],
   },
@@ -22,10 +25,15 @@ export const filmsSlice = createSlice({
     searchFilms: (state, action) => {
       state.searchFilms = action.payload;
     },
+    currentFilmsData: (state) => {
+      state.currentFilms = state.allFilms.slice(0, state.pages * 10);
+      state.pages += 1;
+      state.isLastPage = state.allFilms.length <= state.pages;
+    },
   },
 });
 
-export const { addFilms, searchFilms } = filmsSlice.actions;
+export const { addFilms, searchFilms, currentFilmsData } = filmsSlice.actions;
 
 export const getFilmsAsync = () => async (dispatch) => {
   const data = await Api.getFilms();
@@ -53,6 +61,10 @@ export const uploadDataAsync = (file) => async (dispatch) => {
 
 export const selectFilms = (state) => {
   return state.films.allFilms;
+};
+export const selectCurrentFilms = (state) => {
+  const { currentFilms, isLastPage } = state.films;
+  return { currentFilms, isLastPage };
 };
 export const selectSearchFilms = (state) => state.films.searchFilms;
 

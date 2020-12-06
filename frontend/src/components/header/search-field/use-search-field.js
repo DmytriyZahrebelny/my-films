@@ -18,8 +18,8 @@ export const useSearchField = () => {
 
     const searchData = films.filter(({ title, stars }) => {
       return (
-        title.toLowerCase().includes(evt.target.search.value.toLowerCase()) ||
-        stars.filter((star) => star.toLowerCase().includes(evt.target.search.value)).length
+        title.toLowerCase().includes(evt.target.search.value.toLowerCase().trim()) ||
+        stars.filter((star) => star.toLowerCase().includes(evt.target.search.value.trim())).length
       );
     });
 

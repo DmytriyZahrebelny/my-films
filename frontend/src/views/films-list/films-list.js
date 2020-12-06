@@ -6,7 +6,7 @@ import { useFilms } from './use-films';
 import { FilmsCard } from './films-card';
 import { useFilmStylesStyles } from './use-film-list-styles';
 import { LIST_DATA_MAP, NOTHING_FOUND, SEARCH_DATA } from './films-list.constants';
-import { UploadDataModal } from '../../components/upload-data-modal';
+import { NewFilmModal } from '../../components/header/new-film-modal';
 
 export const FilmsList = () => {
   const { pathname } = useLocation();
@@ -14,7 +14,7 @@ export const FilmsList = () => {
   const classes = useFilmStylesStyles();
 
   if (!filmsData.films.length) {
-    return <UploadDataModal open />;
+    return <NewFilmModal open={!filmsData.films.length} onClose={() => false} />;
   }
 
   if (!filmsData.searchFilms.length && pathname === SEARCH_DATA) {
@@ -28,7 +28,9 @@ export const FilmsList = () => {
   return (
     <Grid container classes={{ root: classes.root }}>
       {filmsData[LIST_DATA_MAP[pathname]] &&
-        filmsData[LIST_DATA_MAP[pathname]].map((data) => <FilmsCard key={data.id} {...data} />)}
+        filmsData[LIST_DATA_MAP[pathname]].map((data) => (
+          <FilmsCard key={data.id} lastLink={filmsData.lastLink} {...data} />
+        ))}
     </Grid>
   );
 };

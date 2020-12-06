@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { uploadDataAsync } from '../../store/films';
+import { uploadDataAsync } from '../../../store/films';
 
 export const useUploadDataModal = () => {
   const dispatch = useDispatch();

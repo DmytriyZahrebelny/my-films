@@ -6,12 +6,12 @@ import { useFilmsCardStyles } from './use-films-card-styles';
 import { Icon } from '../../../components/icon';
 import { ROUTES } from '../../../app.constants';
 
-export const FilmsCard = ({ id, title, stars }) => {
+export const FilmsCard = ({ id, title, stars, lastLink }) => {
   const classes = useFilmsCardStyles();
 
   return (
     <Grid item xs={3}>
-      <Link to={`${ROUTES.info}/${id}`} className={classes.card}>
+      <Link to={`${ROUTES.info}/${id}`} ref={lastLink} className={classes.card}>
         <Icon name="film" size={80} />
         <div className={classes.star}>
           <Icon name="star" size={30} />
