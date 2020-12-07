@@ -3,13 +3,13 @@ import { Typography } from '@material-ui/core';
 
 import { useFormModalStyles } from './use-form-modal-styles';
 import { useFormModal } from './use-form-modal';
-import { TextField } from '../../../text-field';
-import { SelectField } from '../../../select-field';
+import { TextField } from '../../text-field';
+import { SelectField } from '../../select-field';
 import { DVD, VHS, BLU_RAY } from './form-modal.constatns';
-import { Modal } from '../../../modal';
-import { AddStarsModal } from '../../add-stars-modal';
+import { Modal } from '../../modal';
+import { AddStarsModal } from '../../header/add-stars-modal';
 
-export const FormModal = ({ open, onClose }) => {
+export const FormModal = ({ onClose }) => {
   const classes = useFormModalStyles();
   const {
     handleSubmit,
@@ -26,7 +26,7 @@ export const FormModal = ({ open, onClose }) => {
   } = useFormModal(onClose);
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open onClose={onClose}>
       <form onSubmit={handleSubmit} className={classes.form}>
         <TextField label="Name" input={getFieldProps('title')} errors={errors} touched={touched} />
         <TextField

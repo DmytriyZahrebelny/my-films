@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import { useHeaderStyles } from './use-header-styles';
 import { useHeader } from './use-header';
 import { SearchField } from './search-field';
-import { NewFilmModal } from './new-film-modal';
+import { UploadModals } from '../upload-modals';
 import { ROUTES } from '../../app.constants';
 
 export const Header = () => {
   const classes = useHeaderStyles();
-  const { open, openModal, onClose } = useHeader();
+  const { open, onClose, openModal } = useHeader();
 
   return (
     <AppBar position="fixed" color="primary">
@@ -24,7 +24,7 @@ export const Header = () => {
         <Typography className={classes.newFilm} variant="body1" onClick={openModal}>
           Add new film
         </Typography>
-        <NewFilmModal open={open} onClose={onClose} />
+        <UploadModals open={open} onClose={onClose} />
       </div>
     </AppBar>
   );

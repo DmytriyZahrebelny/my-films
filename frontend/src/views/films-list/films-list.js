@@ -6,15 +6,18 @@ import { useFilms } from './use-films';
 import { FilmsCard } from './films-card';
 import { useFilmStylesStyles } from './use-film-list-styles';
 import { LIST_DATA_MAP, NOTHING_FOUND, SEARCH_DATA } from './films-list.constants';
-import { NewFilmModal } from '../../components/header/new-film-modal';
+import { UploadModals } from '../../components/upload-modals';
 
 export const FilmsList = () => {
   const { pathname } = useLocation();
   const filmsData = useFilms();
   const classes = useFilmStylesStyles();
+  // const history = useHistory();
+
+  // const onCloseModal = () => history.goBack();
 
   if (!filmsData.films.length) {
-    return <NewFilmModal open={!filmsData.films.length} onClose={() => false} />;
+    return <UploadModals />;
   }
 
   if (!filmsData.searchFilms.length && pathname === SEARCH_DATA) {

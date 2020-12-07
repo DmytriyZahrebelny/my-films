@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { addNewFilmsAsync, selectFilms } from '../../../../store/films';
+import { addNewFilmsAsync, selectFilms } from '../../../store/films';
 import {
   REQUIRED,
   SHOULD_BE_ONLY_NUMBERS,
@@ -19,6 +19,7 @@ export const useFormModal = (onClose) => {
   const [uniqueError, setUniqueError] = useState('');
   const [isStarsModal, setStarsModal] = useState(false);
   const [stars, setStars] = useState([]);
+
   const validate = (value) => {
     const errors = {};
 
