@@ -1,47 +1,35 @@
 import axios from 'axios';
 
-const path = 'http://localhost:3080/films';
+import { BASE_URL, ENDPOINT_MAP } from './api.constants';
 
 export const Api = {
   async getFilms() {
-    const response = await fetch(path, {
-      method: 'GET',
-    });
+    const response = await axios.get(BASE_URL);
 
     const data = response.json();
     return data;
   },
   async getFilmInfo(id) {
-    const response = await fetch(`${path}/${id}`, {
-      method: 'GET',
-    });
+    const response = await axios.get(`${BASE_URL}/${id}`);
 
     const data = response.json();
     return data;
   },
   async addNewFilm(filmData) {
-    const response = await fetch(path, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...filmData }),
-    });
+    const response = await axios.post(BASE_URL, filmData);
 
     const data = await response.json();
 
     return data;
   },
   async deleteFilm(id) {
-    const response = await fetch(`${path}/${id}`, {
-      method: 'DELETE',
-    });
+    const response = await axios.delete(`${BASE_URL}/${id}`);
 
     const data = response.json();
     return data;
   },
   async uploadData(file) {
-    const response = await axios.post(`${path}/upload`, file, {
+    const response = await axios.post(`${BASE_URL}/${ENDPOINT_MAP.upload}`, file, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
